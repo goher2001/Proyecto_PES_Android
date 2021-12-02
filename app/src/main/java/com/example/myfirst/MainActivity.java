@@ -32,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.editTextTextPersonName);
+        EditText editText = (EditText) findViewById(R.id.EditResult);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
 
-    public void sayHelloThreads(View view) {
+    public void Login(View view) {
 
         new Thread(new Runnable() {
             InputStream stream = null;
@@ -50,19 +50,22 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
 
-                    String query = String.format("http://192.168.1.104:9000/Application/Login?fullname=Usuari1&Password=pwd");
-                    //String query = String.format("http://10.192.171.29:9000/Application/hello");
+                    EditText tx = (EditText) findViewById(R.id.etUsername);
+                    String user = tx.getText().toString();
+                    EditText tx2 = (EditText) findViewById(R.id.etPassword);
+                    String pwd = tx.getText().toString();
+                    String query = String.format("http://192.168.1.111:9000/Application/Login?fullname="+user+"&password="+pwd);
                     URL url = new URL(query);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setReadTimeout(10000);
                     conn.setConnectTimeout(15000 /* milliseconds */);
-                    conn.setRequestMethod("POST");
+                    conn.setRequestMethod("GET");
+                   // conn.setRequestMethod("POST");
                     conn.setDoInput(true);
                     conn.setDoOutput(true);
                     conn.connect();
 
-
-                   /* String params = "fullname=Usuari1&Password=pwd";
+                   /* String params = "fullname="+ R.id.etUsername +"&Password=" + R.id.etPassword;
                     OutputStream os = conn.getOutputStream();
                     BufferedWriter writer = new BufferedWriter(
                             new OutputStreamWriter(os, "UTF-8"));
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     writer.flush();
                     writer.close();
                     os.close();
-                    */
+                      */
 
                     stream = conn.getInputStream();
 
@@ -96,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("MainActivity", result);
                     handler.post(new Runnable() {
                         public void run() {
-                            EditText n = (EditText) findViewById(R.id.editTextTextPersonName2);
-                            n.setText("Threads: " + result);
+                            EditText n = (EditText) findViewById(R.id.EditResult);
+                            n.setText(result);
                         }
                     });
 
@@ -109,10 +112,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void sayHelloAsynktask (View view) {
-        new HelloMessage(this).execute("http://192.168.1.104:9000/Application/Login?fullname=Usuari1&password=pwd" );
-        //new HelloMessage(this).execute("http://10.192.171.29:9000/Application/hello" );
+
+    public void sayBorrarUsuari (View view) {
+        new HelloMessage(this).execute("http://192.168.1.111:9000/Application/DonarDeBaixaUsuari?fullname=Usuari1" );
+
     }
+
 
 private class HelloMessage extends AsyncTask<String, Void, String> {
     Context context;
@@ -163,8 +168,8 @@ private class HelloMessage extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
 
-        EditText n = (EditText) findViewById (R.id.editTextTextPersonName2);
-        n.setText("AsynkTask: " +result);
+        EditText n = (EditText) findViewById (R.id.EditResult);
+        n.setText(result);
 
     }
 }
