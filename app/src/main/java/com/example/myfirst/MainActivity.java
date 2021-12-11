@@ -117,6 +117,12 @@ public class MainActivity extends AppCompatActivity {
         new HelloMessage(this).execute("http://192.168.1.111:9000/Application/DonarDeBaixaUsuari?fullname=Usuari1" );
 
     }
+    public void sayRegister (View view) {
+        user =findViewById(R.id.etUsername);
+        pwd = findViewById(R.id.etPassword);
+        new HelloMessage(this).execute("http://10.0.2.2:9000/Application/Register?fullname="+user.getText().toString()+"&password="+pwd.getText().toString());
+
+    }
 
 
 private class HelloMessage extends AsyncTask<String, Void, String> {

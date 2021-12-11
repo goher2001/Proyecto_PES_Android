@@ -34,12 +34,14 @@
         android:layout_marginBottom="10dp"
         android:onClick="Login"
         android:text="Login" />
+
     <Button
         android:id="@+id/bRegister"
-        android:text="Register"
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:onClick="sayRegister"
+        android:text="Register" />
     <EditText
         android:id="@+id/EditResult"
         android:layout_width="match_parent"
