@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
+    EditText user;
+    EditText pwd;
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.EditResult);
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Login(View view) {
+
 
         new Thread(new Runnable() {
             InputStream stream = null;
@@ -50,11 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
 
-                    EditText tx = (EditText) findViewById(R.id.etUsername);
-                    String user = tx.getText().toString();
-                    EditText tx2 = (EditText) findViewById(R.id.etPassword);
-                    String pwd = tx.getText().toString();
-                    String query = String.format("http://192.168.1.111:9000/Application/Login?fullname="+user+"&password="+pwd);
+                    user =findViewById(R.id.etUsername);
+                    pwd = findViewById(R.id.etPassword);
+                    String query = String.format("http://10.0.2.2:9000/Application/Login?fullname="+user.getText().toString()+"&password="+pwd.getText().toString());
                     URL url = new URL(query);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setReadTimeout(10000);
