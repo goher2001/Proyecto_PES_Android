@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                     writer.close();
                     os.close();
                       */
-
+//holoholohola
                     stream = conn.getInputStream();
 
                     BufferedReader reader = null;
