@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,11 +25,13 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirst.MESSAGE";
-
+    Context context;
+    SharedPreferences sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPref = getSharedPreferences("userlogged", context.MODE_PRIVATE);
     }
     EditText user;
     EditText pwd;
@@ -99,10 +103,22 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("MainActivity", result);
                     handler.post(new Runnable() {
                         public void run() {
-                            EditText n = (EditText) findViewById(R.id.EditResult);
-                            n.setText(result);
+                            if(result.length() >= 50)
+                            {
+                                Context context = getApplicationContext();
+                                Intent intent = new Intent(context, Logedin.class);
+                                String message = "hola";
+                                intent.putExtra(EXTRA_MESSAGE, message);
+                                startActivity(intent);
+                            }
+                            else {
+                                EditText n = (EditText) findViewById(R.id.EditResult);
+                                n.setText(result);
+                            }
+
                         }
                     });
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
